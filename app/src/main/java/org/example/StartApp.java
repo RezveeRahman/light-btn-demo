@@ -21,7 +21,7 @@ public class StartApp {
      * `startApplication` starts application
      */
     public void startApplication() {
-        rspFr.visibility(true);
+        rspFr.setVisible(true);
     }
 
     /* ------------------------------------------------------------------ 

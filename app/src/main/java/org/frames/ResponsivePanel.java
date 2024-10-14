@@ -1,6 +1,7 @@
 /**
  * @author: Rezvee Rahman
- * @description: Create panel responsive frame.
+ * @description: Create panel responsive frame. We will also have the
+ * background as a gradient.
  * 
  * @version: SE-21
  */
@@ -17,15 +18,13 @@ import javax.swing.JPanel;
 
 public class ResponsivePanel extends JPanel {
 
-    private Graphics2D g2d;
 
     /**
      * Constructor: constructs a responsive panel. Use this in
      * conjunction with JFrames.
      */
     public ResponsivePanel() {
-        g2d = (Graphics2D)this.getGraphics();
-        paintComponent(g2d);
+        
     }
 
     /* ------------------------------------------------------------------ 
@@ -39,6 +38,8 @@ public class ResponsivePanel extends JPanel {
      * then set the rendering hits (Idk if this step is necessary).
      * After than we then set the paint and fill the rectangle.
      * 
+     * CAUTION: NEVER DO `Graphics2D g2 = this.getGraphics()`
+     * Results in error.
      * @param g
      */
     @Override

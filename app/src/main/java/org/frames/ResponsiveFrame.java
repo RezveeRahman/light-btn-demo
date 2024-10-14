@@ -1,27 +1,39 @@
 package org.frames;
 
 import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.*;
 
-public class ResponsiveFrame {
+public class ResponsiveFrame extends JFrame {
     private static WindowEnumeration DEFAULT_RESOLUTION
             = WindowEnumeration.DEFAULT;
+    private static WindowEnumeration MINIMUM_SIZE
+            = WindowEnumeration.VGA;
 
-    private JFrame respFrame;
+    private ResponsivePanel respPanel; 
 
     /**
      * Constructor
      */
     public ResponsiveFrame() {
+        respPanel = new ResponsivePanel();
         try {
-            respFrame = new JFrame();
-            respFrame.setDefaultCloseOperation
+            this.setDefaultCloseOperation
                     (WindowConstants.DISPOSE_ON_CLOSE);
-            respFrame.setSize(new Dimension
+            this.setMaximizedBounds(new Rectangle
                     (DEFAULT_RESOLUTION.width, DEFAULT_RESOLUTION.height));
-            respFrame.setAlwaysOnTop(true);
-            respFrame.setTitle("Responsive Frame");
+            this.setMinimumSize(new Dimension
+                    (MINIMUM_SIZE.width, MINIMUM_SIZE.height));
+            this.setSize(new Dimension
+                    (DEFAULT_RESOLUTION.width, DEFAULT_RESOLUTION.height));
+            this.setAlwaysOnTop(true);
+            this.setTitle("Responsive Frame");
+            this.add(respPanel);
+
+            this.addFrameSizeListener();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -30,14 +42,22 @@ public class ResponsiveFrame {
     /* ------------------------------------------------------------------ 
      * -- Public methods
      * ------------------------------------------------------------------ */
-
     /**
-     * `visibility` mainly acts as a wrapper function to set the gui
-     * to visible.
-     * @param visible
+     * 
      */
-    public void visibility(boolean visible) {
-        respFrame.setVisible(visible);
+    public void addFrameSizeListener() {
+        this.addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                System.out.println("resized: " + e.getComponent());
+            }
+            @Override
+            public void componentMoved(ComponentEvent e) {}
+            @Override
+            public void componentShown(ComponentEvent e) {}
+            @Override
+            public void componentHidden(ComponentEvent e) {}
+        });
     }
 
     /* ------------------------------------------------------------------ 
@@ -47,5 +67,6 @@ public class ResponsiveFrame {
     /* ------------------------------------------------------------------ 
      * -- Inner classes
      * ------------------------------------------------------------------ */
+
 
 }
